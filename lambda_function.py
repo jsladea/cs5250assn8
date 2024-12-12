@@ -8,7 +8,7 @@ sqs = boto3.resource('sqs', region_name='us-east-1')
 queue = sqs.get_queue_by_name(QueueName=queue_name)
 
 def lambda_handler(event, context):
-    print(event)
+    print(json.dumps(event))
     try:
         if "body" in event and event['body'] and event['body'].strip():
             return publish_widget(event['body'])
@@ -40,3 +40,4 @@ def publish_widget(widget_json_str):
             'statusCode': 200,
             'body': json.dumps(response)
         }
+
