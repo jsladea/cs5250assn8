@@ -5,9 +5,9 @@ import logging
 
 from botocore.exceptions import ClientError
 
-
 queue_name = 'cs5250-requests'
-queue = None
+sqs = boto3.resource('sqs', region_name='us-east-1')
+queue = sqs.get_queue_by_name(QueueName=queue_name)
 
 def lambda_handler(event, context):
     try:
@@ -42,3 +42,4 @@ def publish_widget(widget_json_str):
             'statusCode': 200,
             'body': response
         }
+
