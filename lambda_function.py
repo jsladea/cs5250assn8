@@ -1,7 +1,4 @@
-import json
 import boto3
-import botocore
-import logging
 
 from botocore.exceptions import ClientError
 
@@ -11,13 +8,12 @@ queue = sqs.get_queue_by_name(QueueName=queue_name)
 
 def lambda_handler(event, context):
     try:
-        if event.body:
-            return publish_widget(event.body)
+        if "body" in event:
+            return publish_widget(event['body'])
         else:
             return get_error_response(400, 'Widget data not provided in request')
-    except ClientError:
-        return get_error_response(500, 'An error occurred sending widget to sqs queue')
-    except:
+    except Exception as error:
+        print(error)
         return get_error_response(500, 'An unexpected error was encountered')
 
 def get_error_response(status_code, msg):
@@ -35,11 +31,12 @@ def publish_widget(widget_json_str):
         )
     except ClientError as error:
         print(f"An error occurred sending {widget_json_str} to the sqs queue.")
-        raise error
+        return get_error_response(500, 'An error occurred sending widget to sqs queue')
     else:
         print(response)
         return {
             'statusCode': 200,
             'body': response
         }
+
 
