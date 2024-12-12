@@ -1,0 +1,17 @@
+{
+    "type": "update",
+    "requestId": "ab347d77-47ce-4e86-a089-211a98cb500e",
+    "widgetId": "908191aa-ff56-43ee-9465-395ad30dda36",
+    "owner": "Henry Hops",
+    "description": "VTSWGAWXCHRVNSFZTEIFRRVDXUHTSINFYTE",
+    "otherAttributes": [
+        { "name": "color", "value": "red" },
+        { "name": "size", "value": "86" },
+        { "name": "height", "value": "443" },
+        { "name": "width-unit", "value": "cm" },
+        { "name": "length", "value": "278" },
+        { "name": "length-unit", "value": "cm" },
+        { "name": "quantity", "value": "818" },
+        { "name": "vendor", "value": "DOV" }
+    ]
+}
