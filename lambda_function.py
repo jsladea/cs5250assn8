@@ -1,4 +1,5 @@
 import boto3
+import json
 
 from botocore.exceptions import ClientError
 
@@ -7,8 +8,9 @@ sqs = boto3.resource('sqs', region_name='us-east-1')
 queue = sqs.get_queue_by_name(QueueName=queue_name)
 
 def lambda_handler(event, context):
+    print(event)
     try:
-        if "body" in event:
+        if "body" in event and event['body'] and event['body'].strip():
             return publish_widget(event['body'])
         else:
             return get_error_response(400, 'Widget data not provided in request')
@@ -19,9 +21,9 @@ def lambda_handler(event, context):
 def get_error_response(status_code, msg):
     return {
         'statusCode': status_code,
-        'body': {
+        'body': json.dumps({
             'error': msg
-        }
+        })
     }
 
 def publish_widget(widget_json_str):
@@ -36,7 +38,5 @@ def publish_widget(widget_json_str):
         print(response)
         return {
             'statusCode': 200,
-            'body': response
+            'body': json.dumps(response)
         }
-
-
