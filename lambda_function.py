@@ -29,7 +29,7 @@ def get_error_response(status_code, msg):
 def publish_widget(widget_json_str):
     try:
         response = queue.send_message(
-            MessageBody=widget_json_str
+            MessageBody=json.dumps(json.loads(widget_json_str))
         )
     except ClientError as error:
         print(f"An error occurred sending {widget_json_str} to the sqs queue.")
